@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Enums\DateType;
+use App\Events\DateSaved;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 /**
@@ -17,6 +19,16 @@ use Illuminate\Support\Str;
 class Date extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($date) {
+            event(new DateSaved($date));
+        });
+    }
 
     protected $fillable = [
         'title',

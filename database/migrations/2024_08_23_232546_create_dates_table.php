@@ -14,14 +14,16 @@ return new class extends Migration
     {
         Schema::create('dates', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Customer::class, 'customer_id')->constrained();
+            $table->foreignIdFor(Customer::class, 'customer_id');
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('location')->nullable();
             $table->string('type');
             $table->dateTime('start');
             $table->dateTime('end');
+            $table->boolean('in_agenda')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

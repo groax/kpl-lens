@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Fair::class, 'fair_id')->nullable()->constrained();
-            $table->foreignIdFor(Date::class, 'date_id')->nullable()->constrained();
+            $table->foreignIdFor(Fair::class, 'fair_id')->nullable();
+            $table->foreignIdFor(Date::class, 'date_id')->nullable();
             $table->enum('type_contact', ['lead', 'customer'])->default('lead');
             $table->string('type')->nullable()->default(DateType::WEDDING->value);
             $table->json('names')->nullable();

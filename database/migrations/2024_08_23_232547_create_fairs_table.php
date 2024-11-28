@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('fairs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Date::class, 'date_id')->nullable()->constrained();
+            $table->foreignIdFor(Date::class, 'date_id')->nullable();
             $table->string('name');
             $table->string('slug');
             $table->text('description')->nullable();
