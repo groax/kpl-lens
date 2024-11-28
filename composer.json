@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.9",
-        "laravel/nova": "^4.0",
+        "laravel/nova": "4.35.4",
         "laravel/tinker": "^2.9",
         "spatie/laravel-google-calendar": "^3.8"
     },
