@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use App\Enums\DateType;
-use App\Events\DateSaved;
+use App\Events\AgendaSaved;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -16,17 +15,16 @@ use Illuminate\Support\Str;
  * @property string getDurationStartEnd
  */
 
-class Date extends Model
+class Agenda extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::saved(function ($date) {
-            event(new DateSaved($date));
+        static::saved(function ($agenda) {
+            event(new AgendaSaved($agenda));
         });
     }
 
@@ -36,20 +34,18 @@ class Date extends Model
         'location',
         'type',
         'start',
-        'end'
+        'end',
+        'in_agenda',
+        'meet_link',
     ];
 
     protected $casts = [
         'title' => 'string',
         'type' => DateType::class,
-        'start' => 'datetime:d-m-Y H:i',
-        'end' => 'datetime:d-m-Y H:i'
+        'start' => 'datetime',
+        'end' => 'datetime',
+        'in_agenda' => 'boolean',
     ];
-
-    public function customer(): BelongsTo
-    {
-        return $this->belongsTo(Customer::class);
-    }
 
     public function getDurationStartEnd(): Attribute
     {

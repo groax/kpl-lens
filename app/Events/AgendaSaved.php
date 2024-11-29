@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Agenda;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,16 +11,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class DateSaved
+class AgendaSaved
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $agenda;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(Agenda $agenda)
     {
-        //
+        $this->agenda = $agenda;
     }
 
     /**
@@ -30,7 +33,7 @@ class DateSaved
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('date-saved'),
+            new PrivateChannel('agenda-saved'),
         ];
     }
 }

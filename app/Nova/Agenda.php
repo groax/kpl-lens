@@ -7,6 +7,7 @@ use App\Nova\Traits\ResourceName;
 use Illuminate\Http\Request;
 use Laravel\Nova\Exceptions\HelperNotSupported;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\ID;
@@ -15,7 +16,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Date extends Resource
+class Agenda extends Resource
 {
     use ResourceName;
 
@@ -24,15 +25,15 @@ class Date extends Resource
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Date>
+     * @var class-string<\App\Models\Agenda>
      */
-    public static $model = \App\Models\Date::class;
+    public static $model = \App\Models\Agenda::class;
 
     public static $searchable = false;
 
     public function title()
     {
-        return "{$this->customer->name} - {$this->title}";
+        return "{$this->title} - {$this->start->format('d-m-Y H:i')} / {$this->end->format('d-m-Y H:i')}";
     }
 
     public function subtitle()
@@ -46,10 +47,10 @@ class Date extends Resource
      * @var array
      */
     public static $search = [
+        'title',
+        'location',
         'start',
         'end',
-        'customer.name',
-        'customer.email',
     ];
 
     /**
@@ -63,7 +64,7 @@ class Date extends Resource
     {
         return [
             ID::make()->hide(),
-            BelongsTo::make(__('Customer'), 'customer', Customer::class)->withoutTrashed(),
+            // BelongsTo::make(__('Customer'), 'customer', Customer::class)->withoutTrashed(),
 
             Text::make(__('Title'), 'title')
 //                ->dependsOn('customer', function (Text $field, NovaRequest $request, FormData $formData) {
@@ -71,6 +72,8 @@ class Date extends Resource
 //                })
                 ->required()
                 ->sortable(),
+
+            Boolean::make(__('In Agenda'), 'in_agenda'),
 
             Textarea::make(__('Description'), 'description')
                 ->sortable(),
@@ -83,7 +86,7 @@ class Date extends Resource
 
             DateTime::make(__('Start'), 'start')
                 ->min(now())
-                ->default(now()->format('d-m-Y'))
+//                ->default(now()->format('d-m-Y'))
                 ->required()
                 ->sortable(),
 

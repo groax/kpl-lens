@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Date;
+use App\Models\Agenda;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DateFactory extends Factory
 {
-    protected $model = Date::class;
+    protected $model = Agenda::class;
 
     public function definition(): array
     {

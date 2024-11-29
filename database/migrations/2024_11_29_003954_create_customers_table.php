@@ -12,14 +12,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('photographers', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'user_id')->nullable()->constrained();
+            $table->foreignIdFor(User::class, 'user_id')->nullable();
             $table->string('name');
-            $table->string('slug');
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
-            $table->string('website')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('photographers');
+        Schema::dropIfExists('customers');
     }
 };

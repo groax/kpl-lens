@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\DateSaved;
-use App\Listeners\HandleDateSaved;
+use App\Events\AgendaSaved;
+use App\Listeners\HandleAgendaSaved;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
@@ -22,9 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Event::listen(
-            DateSaved::class,
-            [HandleDateSaved::class, 'handle']
-        );
+        Event::listen(AgendaSaved::class, [HandleAgendaSaved::class, 'handle']);
     }
 }
