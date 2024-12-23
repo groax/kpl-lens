@@ -44,7 +44,5 @@ Route::get('/events/create', function () {
 
     $agenda->save();
 
-    $agenda->refresh();
-
     return response()->json($agenda);
 });

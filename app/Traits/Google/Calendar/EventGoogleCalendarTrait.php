@@ -48,10 +48,12 @@ trait EventGoogleCalendarTrait
      * Create a new event in Google Calendar.
      *
      * @param Agenda $agenda The agenda model to map to a calendar event.
+     * @param string $calendarId The ID of the calendar (use 'primary' for the default calendar).
      * @return Google_Service_Calendar_Event
+     * @throws \Google\Service\Exception
      * @throws Exception
      */
-    public function createEvent(Agenda $agenda): Google_Service_Calendar_Event
+    public function createEvent(Agenda $agenda, string $calendarId = 'primary'): Google_Service_Calendar_Event
     {
         // Ensure we have a valid access token
         $accessToken = $this->getValidAccessToken();
@@ -76,6 +78,6 @@ trait EventGoogleCalendarTrait
         ]);
 
         // Insert the event into Google Calendar
-        return $service->events->insert('primary', $event);
+        return $service->events->insert($calendarId, $event);
     }
 }
