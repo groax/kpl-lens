@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('expires_in');
             $table->string('scope');
             $table->string('token_type');
-            $table->timestamp('created')->nullable();
             $table->timestamps();
         });
     }

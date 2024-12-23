@@ -13,14 +13,19 @@ return new class extends Migration
     {
         Schema::create('agendas', function (Blueprint $table) {
             $table->id();
+            $table->string('event_id')->unique()->nullable(); // Store the `id`
+            $table->string('recurring_event_id')->nullable(); // Store `recurringEventId` if applicable
+            $table->string('ical_uid')->nullable(); // Store `iCalUID`
+            $table->string('html_link')->nullable(); // Store `htmlLink`
+
+            $table->string('summary')->nullable(); // Event title
             $table->boolean('in_agenda')->default(false);
-            $table->boolean('meet_link')->default(false);
-            $table->string('title');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
+            $table->string('meet_link')->nullable();
             $table->string('location')->nullable();
             $table->string('type');
-            $table->dateTime('start');
-            $table->dateTime('end');
+            $table->dateTime('start')->nullable();
+            $table->dateTime('end')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

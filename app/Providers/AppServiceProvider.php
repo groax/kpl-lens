@@ -22,6 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Event::listen(AgendaSaved::class, [HandleAgendaSaved::class, 'handle']);
+         Event::listen(AgendaSaved::class, [HandleAgendaSaved::class, 'handle']);
     }
 }

@@ -27,10 +27,14 @@ class AgendaFactory extends Factory
     {
         $date = Carbon::now();
         return [
+            'event_id' => Str::random(),
+            'recurring_event_id' => null,
+            'ical_uid' => null,
+            'html_link' => null,
+            'summary' => $this->faker->text(maxNbChars: 20),
             'in_agenda' => false,
             'meet_link' => false,
-            'title' => fake()->text(maxNbChars: 20),
-            'description' => fake()->text(maxNbChars: 100),
+            'description' => $this->faker->text(maxNbChars: 100),
             'location' => '',
             'type' => DateType::OTHER,
             'start' => $date,

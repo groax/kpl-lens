@@ -14,6 +14,18 @@ use Illuminate\Support\Str;
 
 /**
  * @property string getDurationStartEnd
+ * @property mixed $event_id
+ * @property mixed $recurring_event_id
+ * @property mixed $ical_uid
+ * @property mixed $html_link
+ * @property mixed $summary
+ * @property mixed $in_agenda
+ * @property mixed $meet_link
+ * @property mixed $description
+ * @property mixed $location
+ * @property mixed $type
+ * @property mixed $start
+ * @property mixed $end
  */
 
 class Agenda extends Model
@@ -30,18 +42,21 @@ class Agenda extends Model
     }
 
     protected $fillable = [
-        'title',
+        'event_id',
+        'recurring_event_id',
+        'ical_uid',
+        'html_link',
+        'summary',
+        'in_agenda',
+        'meet_link',
         'description',
         'location',
         'type',
         'start',
         'end',
-        'in_agenda',
-        'meet_link',
     ];
 
     protected $casts = [
-        'title' => 'string',
         'type' => DateType::class,
         'start' => 'datetime',
         'end' => 'datetime',

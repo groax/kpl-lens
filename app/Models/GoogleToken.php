@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed $expires_in
  * @property mixed $scope
  * @property mixed $token_type
- * @property mixed $created
+ * @property mixed $created_at
+ * @property mixed $updated_at
  */
 
 class GoogleToken extends Model
@@ -23,15 +24,10 @@ class GoogleToken extends Model
         'expires_in',
         'scope',
         'token_type',
-        'created',
-    ];
-
-    protected $casts = [
-        'created' => 'datetime',
     ];
 
     public function isExpired(): bool
     {
-        return $this->created->addSeconds($this->expires_in)->isPast();
+        return $this->updated_at->addSeconds($this->expires_in)->isPast();
     }
 }

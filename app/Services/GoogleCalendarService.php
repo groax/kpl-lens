@@ -2,14 +2,16 @@
 
 namespace App\Services;
 
+use App\Traits\Google\Calendar\EventGoogleCalendarTrait;
 use Exception;
 use Google_Client;
 use App\Models\GoogleToken;
 use Illuminate\Support\Arr;
-use Carbon\Carbon;
 
 class GoogleCalendarService
 {
+    use EventGoogleCalendarTrait;
+
     public Google_Client $client;
     private GoogleToken $token;
 
@@ -57,7 +59,6 @@ class GoogleCalendarService
                 'expires_in' => Arr::get($tokenData, 'expires_in'),
                 'scope' => Arr::get($tokenData, 'scope'),
                 'token_type' => Arr::get($tokenData, 'token_type'),
-                'created' => now(),
             ]
         );
     }
@@ -107,7 +108,6 @@ class GoogleCalendarService
         $token->update([
             'access_token' => Arr::get($newToken, 'access_token'),
             'expires_in' => Arr::get($newToken, 'expires_in'),
-            'created' => now(),
         ]);
 
         $this->token = $token;
