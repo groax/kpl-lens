@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use Illuminate\Support\Str;
+
 enum DateType: string
 {
     case MEETING = 'meeting';
@@ -17,6 +19,6 @@ enum DateType: string
 
     public static function getTypes(): array
     {
-        return collect(DateType::cases())->mapWithKeys(fn($type) => [$type->value => $type->value])->toArray();
+        return collect(DateType::cases())->mapWithKeys(fn($type) => [$type->value => Str::ucfirst($type->value)])->toArray();
     }
 }

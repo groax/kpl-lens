@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\AgendaDeleted;
 use App\Events\AgendaSaved;
 use App\Events\AgendaUpdated;
 use App\Listeners\HandleAgendaDeleted;
@@ -27,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
          Event::listen(AgendaSaved::class, [HandleAgendaSaved::class, 'handle']);
          Event::listen(AgendaUpdated::class, [HandleAgendaUpdated::class, 'handle']);
-         Event::listen(AgendaUpdated::class, [HandleAgendaDeleted::class, 'handle']);
+         Event::listen(AgendaDeleted::class, [HandleAgendaDeleted::class, 'handle']);
     }
 }

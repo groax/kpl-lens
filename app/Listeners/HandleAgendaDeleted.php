@@ -36,9 +36,9 @@ readonly class HandleAgendaDeleted
         /** @var Agenda $agenda */
         $agenda = $event->agenda;
 
-        if (! $this->shouldHandle($agenda)) {
-            return false;
-        }
+//        if (! $this->shouldHandle($agenda)) {
+//            return false;
+//        }
 
         $this->googleCalendarService->delete($agenda);
 

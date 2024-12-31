@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\DateType;
+use App\Events\AgendaDeleted;
 use App\Events\AgendaSaved;
 use App\Events\AgendaUpdated;
 use Carbon\Carbon;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 /**
- * @property string getDurationStartEnd
+ * @property string $get_duration_start_end
  * @property mixed $event_id
  * @property mixed $recurring_event_id
  * @property mixed $ical_uid
@@ -91,10 +92,10 @@ class Agenda extends Model
                 // generate duration string
                 $durationString = '';
                 if ($days > 0) {
-                    $durationString .= "{$days} " . ($days > 1 ? __("Days") : __('Day')) . '</br>';
+                    $durationString .= "{$days} " . ($days > 1 ? __("Days") : __('Day'));
                 }
                 if ($hours > 0) {
-                    $durationString .= "{$hours} " . __("Hour") . '</br>';
+                    $durationString .= "{$hours} " . __("Hour");
                 }
                 if ($minutes > 0 || ($days == 0 && $hours == 0)) {
                     $durationString .= "{$minutes} " . ($minutes > 1 ? __("Minutes") : __('Minute'));
