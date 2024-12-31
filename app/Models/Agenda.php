@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\DateType;
 use App\Events\AgendaSaved;
+use App\Events\AgendaUpdated;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,6 +39,14 @@ class Agenda extends Model
 
         static::saved(function ($agenda) {
             event(new AgendaSaved($agenda));
+        });
+
+        static::updated(function ($agenda) {
+            event(new AgendaUpdated($agenda));
+        });
+
+        static::deleting(function ($agenda) {
+            event(new AgendaDeleted($agenda));
         });
     }
 

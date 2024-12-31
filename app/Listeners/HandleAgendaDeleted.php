@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-readonly class HandleAgendaSaved
+readonly class HandleAgendaDeleted
 {
     /**
      * Create the event listener.
@@ -19,13 +19,12 @@ readonly class HandleAgendaSaved
         //
     }
 
+    /**
+     * @throws \Google\Service\Exception
+     */
     private function shouldHandle(Agenda $agenda): bool
-    {
-        return $agenda->in_agenda
-            && ! $agenda->event_id
-            && ! $agenda->recurring_event_id
-            && ! $agenda->ical_uid
-            && ! $agenda->html_link;
+    {;
+        return $this->googleCalendarService->get($agenda->event_id)->valid();
     }
 
     /**
@@ -41,14 +40,7 @@ readonly class HandleAgendaSaved
             return false;
         }
 
-        $googleCalendar = $this->googleCalendarService->create($agenda);
-
-        $agenda->event_id = $googleCalendar->getId();
-        $agenda->recurring_event_id = $googleCalendar->getRecurringEventId();
-        $agenda->ical_uid = $googleCalendar->getICalUID();
-        $agenda->html_link = $googleCalendar->getHtmlLink();
-        $agenda->meet_link = $googleCalendar->getHangoutLink();
-        $agenda->save();
+        $this->googleCalendarService->delete($agenda);
 
         return true;
     }

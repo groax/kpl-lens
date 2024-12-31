@@ -26,7 +26,7 @@ Route::get('/events', function (Request $request, GoogleCalendarService $service
     $timeMax = $request->query('timeMax', null); // No upper limit by default
 
     try {
-        $events = $service->listEvents($calendarId, $timeMin, $timeMax);
+        $events = $service->all($calendarId, $timeMin, $timeMax);
         return response()->json($events);
     } catch (\Exception $e) {
         return response()->json(['error' => $e->getMessage()], 400);

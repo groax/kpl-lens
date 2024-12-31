@@ -9,7 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AgendaSaved
+class AgendaDeleted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -31,7 +31,7 @@ class AgendaSaved
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('agenda-saved'),
+            new PrivateChannel('agenda-deleted'),
         ];
     }
 }
