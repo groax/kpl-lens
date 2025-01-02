@@ -59,23 +59,23 @@ class AgendaResource extends Resource
                     ->format('d-m-Y H:i')
                     ->after('start'),
 
-                //Repeater::make('members')
-                //    ->schema([
-                //        Forms\Components\Select::make('user_id')
-                //            ->label(__('User'))
-                //            ->options(function (callable $get) {
-                //                // Haal de huidige waarden van de repeater op
-                //                $currentMembers = $get('members') ?? [];
-
-                //                // Haal alleen de gebruikers op die nog niet zijn geselecteerd
-                //                return User::query()
-                //                    ->whereNotIn('id', array_column($currentMembers, 'user_id'))
-                //                    ->pluck('email', 'id');
-                //            })
-                //            ->searchable(), // Optioneel, handig voor grotere lijsten
-                //    ])
-                //    ->columnSpanFull()
-                //    ->createItemButtonLabel(__('Add Member')), // Optioneel
+                Repeater::make('attendees')
+                    ->label(__('Attendees'))
+                    ->schema([
+                        Forms\Components\Select::make('attendees')
+                            ->label(__('E-mail'))
+                            ->options(function (callable $get) {
+                                // Haal de huidige waarden van de repeater op
+                                // $currentMembers = $get('attendees') ?? [];
+                                // Haal alleen de gebruikers op die nog niet zijn geselecteerd
+                                return User::query()
+                                // ->whereNotIn('id', [$currentMembers])
+                                    ->pluck('email', 'id');
+                            })
+                            ->searchable(), // Optioneel, handig voor grotere lijsten
+                    ])
+                    ->columnSpanFull()
+                    ->createItemButtonLabel(__('Add attendee')), // Optioneel
 
                 Forms\Components\Toggle::make('in_agenda')
                     ->label(__('In agenda'))
