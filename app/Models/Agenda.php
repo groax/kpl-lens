@@ -52,6 +52,7 @@ class Agenda extends Model
     }
 
     protected $fillable = [
+        'attendees',
         'event_id',
         'recurring_event_id',
         'ical_uid',
@@ -67,6 +68,7 @@ class Agenda extends Model
     ];
 
     protected $casts = [
+        'attendees' => 'array',
         'type' => DateType::class,
         'start' => 'datetime',
         'end' => 'datetime',
