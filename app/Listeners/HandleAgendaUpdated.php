@@ -15,7 +15,8 @@ readonly class HandleAgendaUpdated
      */
     public function __construct(
         private GoogleCalendarService $googleCalendarService
-    ) {
+    )
+    {
         //
     }
 
@@ -33,8 +34,18 @@ readonly class HandleAgendaUpdated
         /** @var Agenda $agenda */
         $agenda = $event->agenda;
 
-        if (! $this->shouldHandle($agenda)) {
+        if (!$this->shouldHandle($agenda)) {
             $this->googleCalendarService->delete($agenda);
+
+            // Reset the Google Calendar fields
+            $agenda->event_id = NULL;
+            $agenda->recurring_event_id = NULL;
+            $agenda->ical_uid = NULL;
+            $agenda->html_link = NULL;
+            $agenda->meet_link = NULL;
+
+            $agenda->save();
+
             return false;
         }
 

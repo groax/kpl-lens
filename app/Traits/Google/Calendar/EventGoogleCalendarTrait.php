@@ -3,15 +3,24 @@
 namespace App\Traits\Google\Calendar;
 
 use App\Models\Agenda;
-use Carbon\Carbon;
+use App\Models\User;
 use Exception;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
 use Google_Service_Calendar_EventDateTime;
-use Illuminate\Support\Arr;
 
 trait EventGoogleCalendarTrait
 {
+    private function addAttendees(Google_Service_Calendar_Event $event, Agenda $agenda): Google_Service_Calendar_Event
+    {
+        $attendees[] = User::query()->whereIn('email', $agenda->attendees)->pluck('email')->each(function ($email) {
+            return ['email' => $email];
+        });
+        $event->setAttendees($attendees);
+
+        return $event;
+    }
+
     /**
      * Retrieve all events from a calendar.
      *
@@ -104,6 +113,8 @@ trait EventGoogleCalendarTrait
             'timeZone' => 'Europe/Amsterdam',
         ]));
 
+        $event = $this->addAttendees($event, $agenda);
+
         // Insert the event into Google Calendar
         return $service->events->insert($calendarId, $event);
     }
@@ -131,7 +142,7 @@ trait EventGoogleCalendarTrait
 
         // If the event does not exist, create a new one
         // This can happen if the event was deleted in Google Calendar
-        if (! $event) {
+        if (!$event) {
             return $this->create($agenda, $calendarId);
         }
 
@@ -149,6 +160,8 @@ trait EventGoogleCalendarTrait
             'dateTime' => $agenda->end->toIso8601String(),
             'timeZone' => 'Europe/Amsterdam',
         ]));
+
+        $event = $this->addAttendees($event, $agenda);
 
         // Update the event in Google Calendar
         return $service->events->update($calendarId, $agenda->event_id, $event);

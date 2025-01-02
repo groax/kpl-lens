@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property string $get_duration_start_end
+ * @property mixed $attendees
  * @property mixed $event_id
  * @property mixed $recurring_event_id
  * @property mixed $ical_uid
@@ -32,7 +33,7 @@ use Illuminate\Support\Str;
 
 class Agenda extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory; //, SoftDeletes;
 
     protected static function boot(): void
     {
